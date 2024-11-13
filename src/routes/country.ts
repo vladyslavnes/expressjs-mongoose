@@ -15,19 +15,35 @@ routes.get("/", async (req, res) => {
 
 routes.post("/", async (req, res) => {
   try {
-    const country: ICountry = req.body;
+    const locationData = req.body;
+    
+    // Generate a name from coordinates
+    const name = `Location_${locationData.latitude.toFixed(4)}_${locationData.longitude.toFixed(4)}`;
+    
+    // Create country object with location data
+    const countryData = {
+      name,
+      location: {
+        altitude: locationData.altitude,
+        altitudeAccuracy: locationData.altitudeAccuracy,
+        latitude: locationData.latitude,
+        accuracy: locationData.accuracy,
+        longitude: locationData.longitude,
+        heading: locationData.heading,
+        speed: locationData.speed
+      }
+    };
 
-    const countryExists = await CountryModel.findOne({
-      name: country.name,
-    }).exec();
+    const countryExists = await CountryModel.findOne({ name }).exec();
 
     if (countryExists) {
       return res
         .status(409)
-        .json({ error: "There is already another country with this name" });
+        .json({ error: "There is already another location entry with these coordinates" });
     }
 
-    const newCountry = await CountryModel.create(country);
+    console.log('Saving location data:', countryData);
+    const newCountry = await CountryModel.create(countryData);
     return res.status(201).json(newCountry);
   } catch (error) {
     console.error(error);
