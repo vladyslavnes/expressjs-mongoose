@@ -34,14 +34,6 @@ routes.post("/", async (req, res) => {
       }
     };
 
-    const countryExists = await CountryModel.findOne({ name }).exec();
-
-    if (countryExists) {
-      return res
-        .status(409)
-        .json({ error: "There is already another location entry with these coordinates" });
-    }
-
     console.log('Saving location data:', countryData);
     const newCountry = await CountryModel.create(countryData);
     return res.status(201).json(newCountry);
