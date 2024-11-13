@@ -18,7 +18,7 @@ routes.post("/", async (req, res) => {
     const locationData = req.body;
     
     // Generate a name from coordinates
-    const name = `Location_${locationData.latitude.toFixed(4)}_${locationData.longitude.toFixed(4)}`;
+    const name = `Location_${locationData.latitude.toFixed(4)}_${locationData.longitude.toFixed(4)}, ${Math.random().toString(36).substring(2, 15)}`;
     
     // Create country object with location data
     const countryData = {
