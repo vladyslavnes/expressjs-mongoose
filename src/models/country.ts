@@ -18,9 +18,15 @@ const CountrySchema = new Schema({
     type: String,
     unique: true,
   },
-  iso2code: {
-    type: String,
-  },
+  location: {
+    altitude: Number,
+    altitudeAccuracy: Number,
+    latitude: Number,
+    accuracy: Number,
+    longitude: Number,
+    heading: { type: Number, default: null },
+    speed: { type: Number, default: null }
+  }
 });
 
 const CountryModel = model<ICountry>("Country", CountrySchema);
