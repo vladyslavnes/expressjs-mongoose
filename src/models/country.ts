@@ -16,7 +16,6 @@ interface ICountry extends Document {
 const CountrySchema = new Schema({
   name: {
     type: String,
-    unique: true,
   },
   location: {
     altitude: Number,
