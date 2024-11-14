@@ -43,4 +43,14 @@ routes.post("/", async (req, res) => {
   }
 });
 
+routes.delete("/clear", async (req, res) => {
+  try {
+    await CountryModel.deleteMany({});
+    return res.status(200).json({ message: "All items have been removed." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Sorry, something went wrong :/" });
+  }
+});
+
 export default routes;
